@@ -1,3 +1,6 @@
+import codeanticode.syphon.*;
+
+SyphonServer server;
 PGraphics pg;
 int width = 640;
 int height = 360;
@@ -7,10 +10,16 @@ float TIME_SHIFT = 0.01;
 
 DCircle[] circles = new DCircle[150];
 
-void setup() {
+void settings() {
   size(640, 360, P3D);
-  //lights();
   pixelDensity(2);
+  PJOGL.profile=1;
+}
+
+void setup() {
+  //size(640, 360, P3D);
+  server = new SyphonServer(this, "Processing Syphon");
+  //lights();
   //smooth();
   noStroke();
   img = loadImage("vignette.png");
@@ -30,6 +39,8 @@ void draw() {
       circles[i] = spawnCircle();
     }
   }
+  
+  server.sendScreen();
 }
 
 void keyPressed() {
