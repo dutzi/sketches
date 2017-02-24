@@ -10,45 +10,45 @@ int c_NUM_LINES = 30;
 int c_BANDS = 32;
 
 void settings() {
-  size(640, 360, P3D);
-  pixelDensity(2);
-  PJOGL.profile=1;
+	size(640, 360, P3D);
+	pixelDensity(2);
+	PJOGL.profile=1;
 }
 
 void setup() {
-  server = new SyphonServer(this, "Processing Syphon");
-  noStroke();
+	server = new SyphonServer(this, "Processing Syphon");
+	noStroke();
 
-  restartConsts();
+	restartConsts();
 
-  linesRenderer = new LinesRenderer();
+	linesRenderer = new LinesRenderer();
 
-  FFT fft = new FFT(this, c_BANDS);
-  AudioIn in = new AudioIn(this, 0);
+	FFT fft = new FFT(this, c_BANDS);
+	AudioIn in = new AudioIn(this, 0);
 
-  // SpectrumInputMethod spectrumInput = new FFTSpectrumInput(fft, in);
-  SpectrumInputMethod spectrumInput = new ShittySpectrumInput();
-  linesRenderer.setInputMethod(spectrumInput);
+	// SpectrumInputMethod spectrumInput = new FFTSpectrumInput(fft, in);
+	SpectrumInputMethod spectrumInput = new ShittySpectrumInput();
+	linesRenderer.setInputMethod(spectrumInput);
 }
 
 void setupAudioOut() {
-  sine = new SinOsc(this);
-  sine.play();
+	sine = new SinOsc(this);
+	sine.play();
 }
 
 void draw() {
-  if (!RenderController.shouldRender()) {
-    return;
-  }
+	if (!RenderController.shouldRender()) {
+		return;
+	}
 
-  background(#CEE1DF);
-  fill(#000000);
+	background(#CEE1DF);
+	fill(#000000);
 
-  restartConsts();
+	restartConsts();
 
-  linesRenderer.updateLines();
+	linesRenderer.updateLines();
 
-  server.sendScreen();
+	server.sendScreen();
 
-  RenderController.onEndDraw();
+	RenderController.onEndDraw();
 }
